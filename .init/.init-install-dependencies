@@ -1,0 +1,4 @@
+{
+    "command": "cd db_visualizer && npm install",
+    "working_directory": "/home/kavia/workspace/code-generation/autonomous-trading-bot-with-news-sentiment-analysis-217592-217601/trading_bot_database"
+}

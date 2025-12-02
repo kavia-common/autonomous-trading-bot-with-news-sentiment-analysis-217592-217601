@@ -1,0 +1,4 @@
+{
+    "command": "mysql -h localhost -u appuser -pdbuser123 -e \"SELECT VERSION()\"",
+    "working_directory": "/home/kavia/workspace/code-generation/autonomous-trading-bot-with-news-sentiment-analysis-217592-217601/trading_bot_database"
+}
