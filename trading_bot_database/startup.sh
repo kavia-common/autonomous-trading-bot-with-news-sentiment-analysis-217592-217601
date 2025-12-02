@@ -121,6 +121,23 @@ export MYSQL_DB="${DB_NAME}"
 export MYSQL_PORT="${DB_PORT}"
 EOF
 
+# Apply schema from startup.sql if present (idempotent)
+if [ -f "startup.sql" ]; then
+    echo "Applying startup.sql schema and seeds..."
+    # Prefer socket for speed and root privileges
+    sudo mysql --socket=/var/run/mysqld/mysqld.sock -D "${DB_NAME}" < startup.sql 2>/tmp/startup_sql.err
+    APPLY_STATUS=$?
+    if [ $APPLY_STATUS -ne 0 ]; then
+        echo "Warning: startup.sql application returned code ${APPLY_STATUS}"
+        echo "Error output:"
+        cat /tmp/startup_sql.err || true
+    else
+        echo "✓ startup.sql applied successfully"
+    fi
+else
+    echo "No startup.sql found; skipping schema application."
+fi
+
 echo "MySQL setup complete!"
 echo "Database: ${DB_NAME}"
 echo "Root user: root (password: ${DB_PASSWORD})"
